@@ -20,17 +20,19 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dino.composeapp.generated.resources.Res
-import dino.composeapp.generated.resources.android_light_sq_ctn
 import dino.composeapp.generated.resources.dino_corner
 import org.jetbrains.compose.resources.painterResource
 
 //automated Credential Manager
 @Composable
 expect fun TriggerAutoSignIn(): Unit
+expect suspend fun manualTriggerSignIn(): Unit
+
+@Composable
+expect fun ClickableContinueWithGooogle(): Unit
 
 @Composable
 fun ContinueWithGoogle() {
-    TriggerAutoSignIn()
     Box(
         modifier = Modifier
             .background(Color(0xff23D76E))
@@ -53,11 +55,7 @@ fun ContinueWithGoogle() {
                         color = Color.White,
                         fontSize = 12.sp
                     )
-                    Image(
-                        painter = painterResource(
-                            resource = Res.drawable.android_light_sq_ctn
-                        ), contentDescription = "Continue with Google"
-                    )
+                    ClickableContinueWithGooogle()
                 }
             }
         }
