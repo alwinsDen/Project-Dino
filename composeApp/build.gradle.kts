@@ -87,25 +87,51 @@ dependencies {
 private object KeyStoreValues {
     const val CLIENT_ID_GOOGLE_AUTH = "CLIENT_ID_GOOGLE_AUTH"
     const val KTOR_ENTRY_URL = "KTOR_ENTRY_URL"
+    const val KTOR_ENTRY_URL_ANDROID = "KTOR_ENTRY_URL_ANDROID"
+    const val KTOR_ENTRY_URL_IOS = "KTOR_ENTRY_URL_IOS"
 }
 
 buildkonfig {
     packageName = "com.alwinsden.dino"
     val secretPropsFile = rootProject.file("secret.properties")
+
+    class TypeDef {
+        val string = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
+    }
+
     val secretProps = Properties()
     if (secretPropsFile.exists()) {
         secretProps.load(secretPropsFile.inputStream())
     }
     defaultConfigs {
         buildConfigField(
-            com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            TypeDef().string,
             KeyStoreValues.CLIENT_ID_GOOGLE_AUTH,
             secretProps.getProperty(KeyStoreValues.CLIENT_ID_GOOGLE_AUTH)
         )
+
         buildConfigField(
-            com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            TypeDef().string,
             KeyStoreValues.KTOR_ENTRY_URL,
-            secretProps.getProperty(KeyStoreValues.KTOR_ENTRY_URL)
+            secretProps.getProperty(KeyStoreValues.KTOR_ENTRY_URL_IOS)
         )
+
+        //OS-based type differentiation
+        targetConfigs {
+            create("android") {
+                buildConfigField(
+                    TypeDef().string,
+                    KeyStoreValues.KTOR_ENTRY_URL,
+                    secretProps.getProperty(KeyStoreValues.KTOR_ENTRY_URL_ANDROID)
+                )
+            }
+            create("ios") {
+                buildConfigField(
+                    TypeDef().string,
+                    KeyStoreValues.KTOR_ENTRY_URL,
+                    secretProps.getProperty(KeyStoreValues.KTOR_ENTRY_URL_IOS)
+                )
+            }
+        }
     }
 }
