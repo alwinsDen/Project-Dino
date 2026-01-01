@@ -8,12 +8,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.credentials.CredentialManager
-import androidx.credentials.CustomCredential
-import androidx.credentials.GetCredentialRequest
-import androidx.credentials.GetCredentialResponse
-import androidx.credentials.PasswordCredential
-import androidx.credentials.PublicKeyCredential
+import androidx.credentials.*
 import androidx.credentials.exceptions.GetCredentialException
 import com.alwinsden.dino.BuildKonfig
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
@@ -49,7 +44,7 @@ fun handleSignIn(credsRequest: GetCredentialResponse) {
             if (credsType.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
                 try {
                     val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credsType.data)
-                    println(googleIdTokenCredential.idToken)
+                    Log.d(TAG, googleIdTokenCredential.idToken)
                 } catch (e: GoogleIdTokenParsingException) {
                     Log.e(TAG, "Error parsing Google ID token", e)
                 }

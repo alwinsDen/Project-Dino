@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,7 +36,6 @@ fun ContinueWithGoogle() {
         modifier = Modifier
             .background(Color(0xff23D76E))
             .statusBarsPadding()
-            .navigationBarsPadding()
             .fillMaxSize(),
     ) {
         Box(Modifier.align(Alignment.Center)) {
