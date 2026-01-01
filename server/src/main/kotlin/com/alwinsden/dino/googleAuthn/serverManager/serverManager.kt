@@ -23,3 +23,9 @@ fun ApplicationCall.verifyGoogleToken(mobileGoogleIdToken: String) {
     val payload: GoogleIdToken.Payload = idToken.payload
     println(payload.email)
 }
+
+
+//nonce generator
+fun ApplicationCall.nonceGenerator(): String {
+    return java.util.UUID.randomUUID().toString()
+}

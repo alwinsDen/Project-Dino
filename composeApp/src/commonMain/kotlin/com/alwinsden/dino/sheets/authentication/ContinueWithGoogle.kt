@@ -2,13 +2,7 @@ package com.alwinsden.dino.sheets.authentication
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,7 +22,7 @@ expect fun TriggerAutoSignIn(): Unit
 expect suspend fun manualTriggerSignIn(): Unit
 
 @Composable
-expect fun ClickableContinueWithGooogle(): Unit
+expect fun ClickableContinueWithGoogle(): Unit
 
 @Composable
 fun ContinueWithGoogle() {
@@ -53,7 +47,7 @@ fun ContinueWithGoogle() {
                         color = Color.White,
                         fontSize = 12.sp
                     )
-                    ClickableContinueWithGooogle()
+                    ClickableContinueWithGoogle()
                 }
             }
         }

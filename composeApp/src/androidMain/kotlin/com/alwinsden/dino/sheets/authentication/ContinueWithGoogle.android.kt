@@ -3,14 +3,13 @@ package com.alwinsden.dino.sheets.authentication
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.credentials.*
 import androidx.credentials.exceptions.GetCredentialException
 import com.alwinsden.dino.BuildKonfig
+import com.alwinsden.dino.utilities.UI.DialogLoader
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -58,10 +57,14 @@ fun handleSignIn(credsRequest: GetCredentialResponse) {
 }
 
 @Composable
-actual fun ClickableContinueWithGooogle() {
+actual fun ClickableContinueWithGoogle() {
     val context = LocalContext.current
     val credentialManager = CredentialManager.create(context)
+
+
     val customScope = rememberCoroutineScope()
+    var loaderState by remember { mutableStateOf(false) }
+
     //this is used for automated bottom-sheet login
     val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
         .setFilterByAuthorizedAccounts(false)
@@ -76,12 +79,12 @@ actual fun ClickableContinueWithGooogle() {
     )
         .setNonce("test-nonce")
         .build()
-
     LaunchedEffect(Unit) {
         //auto login flow
         val request: GetCredentialRequest = GetCredentialRequest.Builder()
             .addCredentialOption(googleIdOption)
             .build()
+        loaderState = true
         coroutineScope {
             try {
                 val result = credentialManager.getCredential(
@@ -92,9 +95,12 @@ actual fun ClickableContinueWithGooogle() {
                 handleSignIn(result)
             } catch (e: GetCredentialException) {
                 Log.e(TAG, "Error getting credential", e)
+            } finally {
+                loaderState = false
             }
         }
     }
+    DialogLoader(loaderState)
     Image(
         painter = painterResource(
             resource = Res.drawable.android_light_sq_ctn
@@ -104,6 +110,7 @@ actual fun ClickableContinueWithGooogle() {
                 .addCredentialOption(signInWithGoogleOption)
                 .build()
             customScope.launch {
+                loaderState = true
                 try {
                     val result = credentialManager.getCredential(
                         request = request,
@@ -113,6 +120,8 @@ actual fun ClickableContinueWithGooogle() {
                     handleSignIn(result)
                 } catch (e: GetCredentialException) {
                     Log.e(TAG, "Error getting credential", e)
+                } finally {
+                    loaderState = false
                 }
             }
         }
