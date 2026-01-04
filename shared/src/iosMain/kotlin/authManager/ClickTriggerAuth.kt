@@ -11,7 +11,6 @@ class GoogleAuthenticator {
     suspend fun login() = suspendCoroutine<String?> { continuation ->
         val rootUiView = UIApplication.sharedApplication
             .keyWindow?.rootViewController
-
         if (rootUiView == null) {
             continuation.resume(null)
         } else {
@@ -22,7 +21,7 @@ class GoogleAuthenticator {
                     val idToken = gidSignInResult?.user?.idToken
                     val profile = gidSignInResult?.user?.profile
                     if (idToken != null) {
-                        println(idToken.toString())
+                        println(idToken.tokenString)
                     } else {
                         continuation.resume(null)
                     }
