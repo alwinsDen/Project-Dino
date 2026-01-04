@@ -1,3 +1,4 @@
+#include "Google.xcconfig"
 TEAM_ID=
 
 PRODUCT_NAME=Dino

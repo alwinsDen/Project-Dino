@@ -89,6 +89,8 @@ private object KeyStoreValues {
     const val KTOR_ENTRY_URL = "KTOR_ENTRY_URL"
     const val KTOR_ENTRY_URL_ANDROID = "KTOR_ENTRY_URL_ANDROID"
     const val KTOR_ENTRY_URL_IOS = "KTOR_ENTRY_URL_IOS"
+    const val IOS_CLIENT_ID = "IOS_CLIENT_ID"
+    const val IOS_REVERSE_CLIENT_ID = "IOS_REVERSE_CLIENT_ID"
 }
 
 buildkonfig {
@@ -134,4 +136,31 @@ buildkonfig {
             }
         }
     }
+}
+
+tasks.register("XCodeBuildKonfigGenerator") {
+    val secretPropsFile = rootProject.file("secret.properties")
+    val secretProps = Properties()
+    if (secretPropsFile.exists()) {
+        secretProps.load(secretPropsFile.inputStream())
+    }
+    val xcodeConfigFile = rootProject.file("iosApp/Configuration/Google.xcconfig")
+    doLast {
+        val writeContent = """
+            ${KeyStoreValues.IOS_CLIENT_ID} = ${secretProps.getProperty(KeyStoreValues.IOS_CLIENT_ID)}
+            ${KeyStoreValues.IOS_REVERSE_CLIENT_ID} = ${secretProps.getProperty(KeyStoreValues.IOS_REVERSE_CLIENT_ID)}
+            ${KeyStoreValues.CLIENT_ID_GOOGLE_AUTH} = ${secretProps.getProperty(KeyStoreValues.CLIENT_ID_GOOGLE_AUTH)}
+        """.trimIndent()
+        if (!xcodeConfigFile.exists() || xcodeConfigFile.readText() != writeContent) {
+            xcodeConfigFile.writeText(writeContent)
+            println("Updated xcodeConfigFile!")
+        } else {
+            println("Config.xcconfig already at latest.")
+        }
+    }
+}
+
+//this is the process that trigger build + inject of Kotlin UI at IOS level.
+tasks.named("embedAndSignAppleFrameworkForXcode") {
+    dependsOn("XCodeBuildKonfigGenerator")
 }
