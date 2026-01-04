@@ -70,5 +70,6 @@ fun ContinueWithGoogle() {
                 modifier = Modifier.fillMaxWidth(0.7f)
             )
         }
+        //ErrorPopUp("lorem aisji  oajsid asiodio  asdjaijir˳")
     }
 }

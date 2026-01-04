@@ -18,3 +18,8 @@ captures
 **/xcshareddata/WorkspaceSettings.xcsettings
 node_modules/
 secret.properties
+iosApp/Pods
+*.xcuserdatad
+*.xcuserstate
+xcuserdata/
+*.podspec
