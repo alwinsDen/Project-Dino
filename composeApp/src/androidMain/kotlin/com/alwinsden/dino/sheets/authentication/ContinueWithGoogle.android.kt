@@ -126,3 +126,7 @@ actual fun ClickableContinueWithGoogle(nonce: String) {
     )
     DialogLoader(loaderState)
 }
+
+@Composable
+actual fun ClickableContinueWithApple(nonce: String) {
+}

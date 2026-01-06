@@ -29,6 +29,9 @@ expect suspend fun manualTriggerSignIn(): Unit
 expect fun ClickableContinueWithGoogle(nonce: String): Unit
 
 @Composable
+expect fun ClickableContinueWithApple(nonce: String): Unit
+
+@Composable
 fun ContinueWithGoogle() {
     var nonce by remember { mutableStateOf(Defaults.default) }
     LaunchedEffect(Unit) {
@@ -57,6 +60,8 @@ fun ContinueWithGoogle() {
                         fontSize = 12.sp
                     )
                     ClickableContinueWithGoogle(nonce)
+                    Spacer(modifier = Modifier.height(10.dp))
+                    ClickableContinueWithApple(nonce)
                 }
             }
         }
