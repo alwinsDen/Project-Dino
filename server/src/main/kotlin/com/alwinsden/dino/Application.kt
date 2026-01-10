@@ -3,7 +3,9 @@ package com.alwinsden.dino
 import com.alwinsden.dino.googleAuthn.serverManager.nonceGenerator
 import com.alwinsden.dino.googleAuthn.serverManager.verifyGoogleToken
 import com.alwinsden.dino.valkeyManager.ValkeyManager
+import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -12,6 +14,24 @@ import kotlinx.coroutines.launch
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 fun Application.module() {
+    //section to manage installations
+    install(StatusPages) {
+        //handle verification cases
+        exception<IllegalArgumentException> { call, cause ->
+            call.respondText(status = HttpStatusCode.BadRequest, text = "$cause")
+        }
+
+        //handle illegal failures
+        exception<IllegalStateException> { call, cause ->
+            call.respondText(status = HttpStatusCode.Unauthorized, text = "$cause")
+        }
+
+        //any other error handling flow
+        exception<Throwable> { call, cause ->
+            call.respondText(status = HttpStatusCode.InternalServerError, text = "$cause")
+        }
+    }
+
     launch {
         try {
             val applicationEnv: ApplicationEnvironment = environment

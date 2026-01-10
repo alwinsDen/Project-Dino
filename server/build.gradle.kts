@@ -27,4 +27,5 @@ dependencies {
         classifier("osx-aarch_64")
     })
     implementation(libs.netty.codec.protobuf)
+    implementation(libs.ktor.statusPages)
 }
