@@ -1,0 +1,24 @@
+package com.alwinsden.dino.navigation
+
+import androidx.compose.runtime.Composable
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.alwinsden.dino.botInterface.BotInterface
+import com.alwinsden.dino.sheets.authentication.ContinueWithGoogle
+
+object NavigationController {
+
+    @Composable
+    fun NavRoutes() {
+        val navController = rememberNavController()
+        NavHost(navController = navController, startDestination = LoginWindow) {
+            composable<LoginWindow> {
+                ContinueWithGoogle()
+            }
+            composable<BotWindow> {
+                BotInterface()
+            }
+        }
+    }
+}

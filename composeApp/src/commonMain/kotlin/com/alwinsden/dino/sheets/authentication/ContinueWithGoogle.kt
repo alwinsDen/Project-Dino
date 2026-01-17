@@ -9,13 +9,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alwinsden.dino.requestManager.RequestManager
 import com.alwinsden.dino.requestManager.get.createNonce
 import com.alwinsden.dino.utilities.UI.ClientKtorConfiguration
 import com.alwinsden.dino.utilities.UI.Defaults
+import com.alwinsden.dino.utilities.UI.FontLibrary
 import dino.composeapp.generated.resources.Res
 import dino.composeapp.generated.resources.dino_corner
 import org.jetbrains.compose.resources.painterResource
@@ -48,9 +49,10 @@ fun ContinueWithGoogle() {
             Column {
                 Text(
                     "Project Dino*",
-                    fontSize = 20.sp,
+                    fontSize = 35.sp,
                     color = Color.White,
-                    fontFamily = FontFamily.Monospace
+                    fontWeight = FontWeight.Normal,
+                    fontFamily = FontLibrary.ebGaramond()
                 )
                 Spacer(Modifier.height(5.dp))
                 Column {
@@ -59,8 +61,9 @@ fun ContinueWithGoogle() {
                         color = Color.White,
                         fontSize = 12.sp
                     )
+                    Spacer(modifier = Modifier.height(3.dp))
                     ClickableContinueWithGoogle(nonce)
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(5.dp))
                     ClickableContinueWithApple(nonce)
                 }
             }

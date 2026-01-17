@@ -16,6 +16,7 @@ kotlin = "2.3.0"
 ktor = "3.3.3"
 logback = "1.5.22"
 buildKonfig = "0.17.1"
+navigationCompose = "2.9.1"
 nettyCodecProtobuf = "4.2.9.Final"
 valkeyGlide = "2.2.5"
 
@@ -41,6 +42,7 @@ ktor-serverTestHost = { module = "io.ktor:ktor-server-test-host-jvm", version.re
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 netty-codec-protobuf = { module = "io.netty:netty-codec-protobuf", version.ref = "nettyCodecProtobuf" }
 valkey-glide = { group = "io.valkey", name = "valkey-glide", version.ref = "valkeyGlide" }
 
