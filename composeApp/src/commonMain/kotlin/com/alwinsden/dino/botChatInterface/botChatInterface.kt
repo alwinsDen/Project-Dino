@@ -67,7 +67,6 @@ fun BotChatInterface() {
             IconButton(onClick = { }) {
                 Icon(imageVector = Icons.Filled.Settings, contentDescription = null)
             }
-            Spacer(Modifier.weight(1f, true))
             Text(
                 text = "17th January 2026", textAlign = TextAlign.Center, style = defaultFontStyle(
                     DefaultFontStylesDataClass()
