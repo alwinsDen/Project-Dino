@@ -19,7 +19,7 @@ import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
 import com.alwinsden.dino.utilities.UI.Defaults
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
 import dino.composeapp.generated.resources.Res
-import dino.composeapp.generated.resources.dino_corner
+import dino.composeapp.generated.resources.ic_dino_corner_sq
 import org.jetbrains.compose.resources.painterResource
 
 //automated Credential Manager
@@ -80,7 +80,7 @@ fun ContinueWithGoogle() {
         Box(Modifier.align(Alignment.BottomEnd)) {
             Image(
                 painter = painterResource(
-                    resource = Res.drawable.dino_corner,
+                    resource = Res.drawable.ic_dino_corner_sq,
                 ),
                 contentDescription = "Corner logo for the ",
                 contentScale = ContentScale.FillWidth,

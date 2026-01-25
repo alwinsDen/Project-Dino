@@ -28,9 +28,7 @@ import com.alwinsden.dino.utilities.UI.defaultFontStyle
 import com.alwinsden.dino.utilities.UI.listModelDefinitions
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
-@Preview
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun BotTextField(mode: String? = null) {

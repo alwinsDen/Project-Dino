@@ -16,7 +16,7 @@ import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import dino.composeapp.generated.resources.Res
-import dino.composeapp.generated.resources.android_light_sq_ctn
+import dino.composeapp.generated.resources.btn_android_id_rec
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 
@@ -101,7 +101,7 @@ actual fun ClickableContinueWithGoogle(nonce: String) {
     }
     Image(
         painter = painterResource(
-            resource = Res.drawable.android_light_sq_ctn
+            resource = Res.drawable.btn_android_id_rec
         ), contentDescription = "Continue with Google",
         modifier = Modifier.clickable {
             val request: GetCredentialRequest = GetCredentialRequest.Builder()

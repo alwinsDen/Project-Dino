@@ -11,8 +11,8 @@ import authManager.GoogleAuthenticator
 import authManager.IOSAuthentication
 import com.alwinsden.dino.utilities.UI.DialogLoader
 import dino.composeapp.generated.resources.Res
-import dino.composeapp.generated.resources.android_light_sq_ctn
-import dino.composeapp.generated.resources.appleid_sign_in_button
+import dino.composeapp.generated.resources.btn_android_id_rec
+import dino.composeapp.generated.resources.btn_apple_id_rec
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 
@@ -38,7 +38,7 @@ actual fun ClickableContinueWithGoogle(nonce: String) {
     }
     Image(
         painter = painterResource(
-            resource = Res.drawable.android_light_sq_ctn
+            resource = Res.drawable.btn_android_id_rec
         ),
         contentDescription = "Continue with Google",
         contentScale = ContentScale.FillWidth,
@@ -61,7 +61,7 @@ actual fun ClickableContinueWithApple(nonce: String) {
     var authenticationClass = remember { IOSAuthentication() }
     var scope = rememberCoroutineScope()
     Image(
-        painter = painterResource(resource = Res.drawable.appleid_sign_in_button),
+        painter = painterResource(resource = Res.drawable.btn_apple_id_rec),
         contentDescription = "",
         modifier = Modifier.fillMaxWidth(.5f)
             .clickable {
