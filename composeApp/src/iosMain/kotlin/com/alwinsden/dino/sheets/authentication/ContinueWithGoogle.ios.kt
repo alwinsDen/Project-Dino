@@ -3,15 +3,12 @@ package com.alwinsden.dino.sheets.authentication
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import authManager.GoogleAuthenticator
 import authManager.IOSAuthentication
-import com.alwinsden.dino.utilities.UI.DialogLoader
 import dino.composeapp.generated.resources.Res
-import dino.composeapp.generated.resources.btn_android_id_rec
 import dino.composeapp.generated.resources.btn_apple_id_rec
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
@@ -26,44 +23,9 @@ actual suspend fun manualTriggerSignIn() {
 }
 
 @Composable
-actual fun ClickableContinueWithGoogle(nonce: String, handleReceivedGoogleTokenId: (String) -> Unit) {
-    val scope = rememberCoroutineScope()
-    var loaderState by remember { mutableStateOf((false)) }
-    val authenticatorClass = remember { GoogleAuthenticator() }
-    LaunchedEffect(Unit) {
-        loaderState = true
-        val readExistingTokenId = authenticatorClass.checkExisting()
-        if (readExistingTokenId != null)
-            handleReceivedGoogleTokenId(readExistingTokenId)
-        loaderState = false
-    }
-    Image(
-        painter = painterResource(
-            resource = Res.drawable.btn_android_id_rec
-        ),
-        contentDescription = "Continue with Google",
-        contentScale = ContentScale.FillWidth,
-        modifier = Modifier
-            .fillMaxWidth(.5f)
-            .wrapContentHeight()
-            .clickable {
-                scope.launch {
-                    val googleIdToken = authenticatorClass.login({ loadingState ->
-                        loaderState = loadingState
-                    })
-                    if (googleIdToken != null) {
-                        handleReceivedGoogleTokenId(googleIdToken)
-                    }
-                }
-            }
-    )
-    DialogLoader(loaderState)
-}
-
-@Composable
 actual fun ClickableContinueWithApple(nonce: String) {
-    var authenticationClass = remember { IOSAuthentication() }
-    var scope = rememberCoroutineScope()
+    val authenticationClass = remember { IOSAuthentication() }
+    val scope = rememberCoroutineScope()
     Image(
         painter = painterResource(resource = Res.drawable.btn_apple_id_rec),
         contentDescription = "",

@@ -2,6 +2,7 @@ package com.alwinsden.dino.sheets.authentication
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -15,22 +16,65 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alwinsden.dino.requestManager.RequestManager
 import com.alwinsden.dino.requestManager.get.createNonce
-import com.alwinsden.dino.utilities.UI.ClientKtorConfiguration
-import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
-import com.alwinsden.dino.utilities.UI.Defaults
-import com.alwinsden.dino.utilities.UI.defaultFontStyle
+import com.alwinsden.dino.utilities.UI.*
 import dino.composeapp.generated.resources.Res
+import dino.composeapp.generated.resources.btn_android_id_rec
 import dino.composeapp.generated.resources.ic_dino_corner_sq
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 //automated Credential Manager
 @Composable
-expect fun TriggerAutoSignIn(): Unit
-expect suspend fun manualTriggerSignIn(): Unit
+expect fun TriggerAutoSignIn()
+expect suspend fun manualTriggerSignIn()
 
+/**
+ * Composable that displays a clickable Google sign-in button.
+ * Uses platform-specific GoogleAuthProvider to handle authentication.
+ *
+ * @param nonce The nonce value from the server for token validation
+ * @param handleReceivedGoogleTokenId Callback invoked when a Google ID token is received
+ */
 @Composable
-expect fun ClickableContinueWithGoogle(nonce: String, handleReceivedGoogleTokenId: (String) -> Unit): Unit
+fun ClickableContinueWithGoogle(nonce: String, handleReceivedGoogleTokenId: (String) -> Unit) {
+    val authProvider = rememberGoogleAuthProvider()
+    val scope = rememberCoroutineScope()
+    var loaderState by remember { mutableStateOf(false) }
+
+    // Auto sign-in check on component mount
+    LaunchedEffect(nonce) {
+        if (nonce == Defaults.default) return@LaunchedEffect
+        loaderState = true
+        authProvider.checkExistingCredentials()?.let { token ->
+            handleReceivedGoogleTokenId(token)
+        }
+        loaderState = false
+    }
+
+    Image(
+        painter = painterResource(Res.drawable.btn_android_id_rec),
+        contentDescription = "Continue with Google",
+        contentScale = ContentScale.FillWidth,
+        modifier = Modifier.fillMaxWidth(.5f)
+            .clickable {
+                scope.launch {
+                    if (nonce == Defaults.default) return@launch
+                    loaderState = true
+                    authProvider.signIn(nonce)
+                        .onSuccess { token ->
+                            handleReceivedGoogleTokenId(token)
+                        }
+                        .onFailure { exception ->
+                            // TODO: Handle error properly
+                            println("Sign-in failed: ${exception.message}")
+                        }
+                    loaderState = false
+                }
+            }
+    )
+    DialogLoader(loaderState)
+}
 
 @Composable
 expect fun ClickableContinueWithApple(nonce: String): Unit
