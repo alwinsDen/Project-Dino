@@ -20,7 +20,11 @@ materialIconsCore = "1.7.8"
 materialIconsCoreVersion = "1.7.3"
 navigationCompose = "2.9.1"
 nettyCodecProtobuf = "4.2.9.Final"
+postgresql = "42.7.9"
 valkeyGlide = "2.2.5"
+exposed = "1.0.0"
+h2 = "2.4.240"
+
 
 [libraries]
 androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "materialIconsCore" }
@@ -49,7 +53,11 @@ material-icons-core = { module = "org.jetbrains.compose.material:material-icons-
 material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "materialIconsCoreVersion" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 netty-codec-protobuf = { module = "io.netty:netty-codec-protobuf", version.ref = "nettyCodecProtobuf" }
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 valkey-glide = { group = "io.valkey", name = "valkey-glide", version.ref = "valkeyGlide" }
+exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
+exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
+h2 = { module = "com.h2database:h2", version.ref = "h2" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

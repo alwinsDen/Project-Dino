@@ -48,12 +48,13 @@ class AndroidGoogleAuthProvider(
         }
     }
 
-    override suspend fun checkExistingCredentials(): String? {
+    override suspend fun checkExistingCredentials(nonce: String): String? {
         return try {
             val googleIdOption = GetGoogleIdOption.Builder()
                 .setFilterByAuthorizedAccounts(true)
                 .setAutoSelectEnabled(true)
                 .setServerClientId(BuildKonfig.CLIENT_ID_GOOGLE_AUTH)
+                .setNonce(nonce)
                 .build()
 
             val request = GetCredentialRequest.Builder()

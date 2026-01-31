@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 class CustomErrorClasses {
 }
 
-class CustomInAppException(val appCode: Int) : RuntimeException()
+class CustomInAppException(val appCode: Int, val incomingErrorMessage: String? = null) : RuntimeException()
 
 @Serializable
 data class ErrorObjectCustom(

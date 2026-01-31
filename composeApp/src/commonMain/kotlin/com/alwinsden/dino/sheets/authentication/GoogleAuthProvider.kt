@@ -21,7 +21,7 @@ interface GoogleAuthProvider {
      *
      * @return The existing Google ID token if available, null otherwise
      */
-    suspend fun checkExistingCredentials(): String?
+    suspend fun checkExistingCredentials(nonce: String): String?
 }
 
 /**

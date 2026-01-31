@@ -31,7 +31,7 @@ fun ClickableContinueWithGoogle(nonce: String, handleReceivedGoogleTokenId: (Str
     LaunchedEffect(nonce) {
         if (nonce == Defaults.default) return@LaunchedEffect
         loaderState = true
-        authProvider.checkExistingCredentials()?.let { token ->
+        authProvider.checkExistingCredentials(nonce)?.let { token ->
             handleReceivedGoogleTokenId(token)
         }
         loaderState = false

@@ -29,7 +29,7 @@ class IOSGoogleAuthProvider(
         }
     }
 
-    override suspend fun checkExistingCredentials(): String? {
+    override suspend fun checkExistingCredentials(nonce: String): String? {
         return authenticator.checkExisting()
     }
 }

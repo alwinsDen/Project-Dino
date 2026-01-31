@@ -1,6 +1,7 @@
 package com.alwinsden.dino
 
 import com.alwinsden.dino.googleAuthn.serverManager.nonceGenerator
+import com.alwinsden.dino.googleAuthn.serverManager.tables.UserInfo
 import com.alwinsden.dino.googleAuthn.serverManager.verifyGoogleToken
 import com.alwinsden.dino.requestManager.utils.CustomInAppException
 import com.alwinsden.dino.requestManager.utils.ErrorObjectCustom
@@ -15,10 +16,37 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.coroutines.launch
+import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.SchemaUtils
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 fun Application.module() {
+
+    //DB specification
+    val dbUsername = environment.config.property("dinoBackend.postgres.DB_USERNAME").getString()
+    val dbPassword = environment.config.property("dinoBackend.postgres.DB_PASSWORD").getString()
+    val dbUrl = environment.config.property("dinoBackend.postgres.DB_URL").getString()
+
+    Database.connect(
+        url = dbUrl,
+        driver = "org.postgresql.Driver",
+        user = dbUsername,
+        password = dbPassword
+    )
+
+    transaction {
+        /*
+        * code inside this transaction should NEVER be commited.
+        * This for DEV only, breaking DB changes.
+        * */
+
+
+        /*Below definitions are needed*/
+        SchemaUtils.create(UserInfo)
+    }
+
     install(ContentNegotiation) {
         json()
     }
@@ -30,7 +58,8 @@ fun Application.module() {
                 HttpStatusCode.BadRequest,
                 ErrorObjectCustom(
                     errorCode = cause.appCode,
-                    errorType = ErrorTypeEnums.CUSTOM.name
+                    errorType = ErrorTypeEnums.CUSTOM.name,
+                    errorMessage = cause.incomingErrorMessage
                 )
             )
         }
