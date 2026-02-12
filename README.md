@@ -1,12 +1,15 @@
 # Project Synapse
 
-A Kotlin Multiplatform application for conversing with AI models, featuring cross-platform mobile support (Android & iOS) with a Ktor backend.
+A Kotlin Multiplatform application for conversing with AI models, featuring cross-platform mobile support (Android &
+iOS) with a Ktor backend.
 
 **Author**: [Alwin's Den](https://alwinsden.com)
 
 ## Overview
 
-Project Synapse is a modern multiplatform chat application that enables users to interact with various AI models. Built with Kotlin Multiplatform, it shares business logic across Android and iOS while maintaining native platform experiences.
+Project Synapse is a modern multiplatform chat application that enables users to interact with various AI models. Built
+with Kotlin Multiplatform, it shares business logic across Android and iOS while maintaining native platform
+experiences.
 
 ## Features
 
@@ -20,12 +23,14 @@ Project Synapse is a modern multiplatform chat application that enables users to
 ## Technology Stack
 
 ### Frontend
+
 - **Kotlin Multiplatform**: Shared code across platforms
 - **Compose Multiplatform (v1.9.3)**: Declarative UI framework
 - **Material 3**: Modern design components
 - **Ktor Client (v3.3.3)**: HTTP communication
 
 ### Backend
+
 - **Ktor Server (v3.3.3)**: Lightweight, asynchronous server
 - **Valkey/Glide (v2.2.5)**: Redis-compatible caching for sessions
 - **Exposed (v1.0.0)**: Kotlin SQL framework for database access.
@@ -33,6 +38,7 @@ Project Synapse is a modern multiplatform chat application that enables users to
 - **Google Sign-In API**: OAuth 2.0 authentication
 
 ### Build Tools
+
 - **Gradle**: Multi-module build system
 - **BuildKonfig**: Build-time configuration management
 - **CocoaPods**: iOS dependency management
@@ -70,7 +76,12 @@ git clone git@github.com:alwinsDen/Project-Synapse.git
 cd Project-Synapse
 ```
 
-### 2. Configure Secrets
+### 2. External dependencies
+
+* Live PSQL server (CLI / Postgres.app) [else could give Connection Refused error.]
+* Valkey CLI setup and running local server.
+
+### 3. Configure Secrets
 
 Copy `refer.secret.properties` to `secret.properties` and fill in your credentials:
 
@@ -80,12 +91,13 @@ cp refer.secret.properties secret.properties
 ```
 
 Required keys:
+
 - `CLIENT_ID_GOOGLE_AUTH`: Google OAuth client ID
 - `KTOR_ENTRY_URL`: Backend server URL
 - `IOS_CLIENT_ID`: iOS-specific Google client ID
 - `IOS_REVERSE_CLIENT_ID`: iOS URL scheme
 
-### 3. Start the Backend Server
+### 4. Start the Backend Server
 
 ```bash
 ./gradlew :server:run
@@ -93,14 +105,16 @@ Required keys:
 
 Server starts on `http://127.0.0.1:5432` by default.
 
-### 4. Build Mobile Apps
+### 5. Build Mobile Apps
 
 **Android:**
+
 ```bash
 ./gradlew :composeApp:assembleDebug
 ```
 
 **iOS:**
+
 ```bash
 cd iosApp && pod install && cd ..
 ./gradlew :composeApp:embedAndSignAppleFrameworkForXcode
@@ -111,11 +125,11 @@ cd iosApp && pod install && cd ..
 
 ### Development Builds
 
-| Platform | Command |
-|----------|---------|
-| Android APK | `./gradlew :composeApp:assembleDebug` |
+| Platform      | Command                                                    |
+|---------------|------------------------------------------------------------|
+| Android APK   | `./gradlew :composeApp:assembleDebug`                      |
 | iOS Framework | `./gradlew :composeApp:embedAndSignAppleFrameworkForXcode` |
-| Server | `./gradlew :server:run` |
+| Server        | `./gradlew :server:run`                                    |
 
 ### Testing
 
@@ -167,11 +181,13 @@ cd iosApp && pod install && cd ..
 ### Key Components
 
 **Navigation System**
+
 - Type-safe navigation using `androidx.navigation.compose`
 - Three main routes: `LoginWindow`, `BotWindow`, `BotChatWindow`
 - Centralized navigation through `NavigationController` singleton
 
 **Authentication Flow**
+
 1. Client requests nonce from server
 2. Server generates UUID and stores in Valkey (60s TTL)
 3. User signs in with Google (platform-specific implementation)
@@ -179,11 +195,13 @@ cd iosApp && pod install && cd ..
 5. JWT token generation (coming soon)
 
 **HTTP Request Management**
+
 - `RequestManager` wraps Ktor HttpClient
 - Platform-specific engines: OkHttp (Android), Darwin (iOS)
 - Extension functions for type-safe API calls
 
 **Database**
+
 - **Exposed**: Kotlin-idiomatic SQL framework for database interactions.
 - **H2**: Used as an in-memory database for development and testing.
 - The server uses the database for persisting chat history and user data.
@@ -205,6 +223,7 @@ cd iosApp && pod install && cd ..
 ### Platform-Specific Code
 
 Use `expect`/`actual` pattern:
+
 ```kotlin
 // commonMain
 expect fun platformSpecificFunction(): String
@@ -219,17 +238,21 @@ actual fun platformSpecificFunction() = "iOS"
 ## Common Issues
 
 ### iOS Build Failures
+
 - Run `pod install` in `iosApp/` directory
 - Verify `secret.properties` contains all iOS keys
 - Check Xcode signing configuration
 
 ### Server Connection Issues
+
 - **Android Emulator**: Use `10.0.2.2` instead of `localhost`
 - **iOS Simulator**: Use `localhost` or `127.0.0.1`
 - Ensure server is running before testing
 
 ### Valkey Platform Compatibility
+
 Current config uses macOS ARM64. For other platforms, update `server/build.gradle.kts`:
+
 - Linux x64: `linux-x86_64`
 - Windows x64: `windows-x86_64`
 
@@ -246,6 +269,7 @@ Contributions are welcome! Please follow these guidelines:
 ### Commit Convention
 
 Follow conventional commits:
+
 - `feat:` New features
 - `fix:` Bug fixes
 - `docs:` Documentation changes
@@ -259,6 +283,7 @@ This project is currently private. Please contact the author for licensing infor
 ## Contact
 
 **Alwin's Den**
+
 - Website: [alwinsden.com](https://alwinsden.com)
 - GitHub: [@alwinsDen](https://github.com/alwinsDen)
 
