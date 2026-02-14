@@ -13,7 +13,7 @@ private class ModelSelectPreviewProvider : PreviewParameterProvider<ModelSelecti
         ModelSelectionParamDetails(
             name = "Google Gemini",
             description = "Advanced model from Google",
-            incomingType = ModelDefinitions.GEMINI.name,
+            incomingType = ModelDefinitions.LOCL_V1.name,
         ),
         ModelSelectionParamDetails(
             name = "Claude Opus",
@@ -21,9 +21,9 @@ private class ModelSelectPreviewProvider : PreviewParameterProvider<ModelSelecti
             incomingType = ModelDefinitions.CLAUDE.name,
         ),
         ModelSelectionParamDetails(
-            name = "Llama",
-            description = "Experimental model from Meta",
-            incomingType = ModelDefinitions.LLAMA.name,
+            name = "Locl V1",
+            description = "V1 model from Locl",
+            incomingType = ModelDefinitions.LOCL_V1.name,
         )
     )
 }

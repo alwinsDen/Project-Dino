@@ -26,23 +26,17 @@ fun InitializedUiState() {
     ) {
         Text(
             text = buildAnnotatedString {
-                withStyle(SpanStyle(fontFamily = FontLibrary.ebGaramond(), color = Color(0xff23D76E))) {
-                    append("dino ")
+                withStyle(
+                    SpanStyle(
+                        background = Color(0xff000000), fontFamily = FontLibrary.ebGaramond(), color = Color(0xffF3DB00)
+                    ),
+                ) {
+                    append(" synapse ")
                 }
                 withStyle(SpanStyle(fontFamily = FontLibrary.ebGaramond())) {
                     append("AI")
                 }
-            }, fontSize = 60.sp, textAlign = TextAlign.Center
-        )
-        Text(
-            "A new day! How is your day going so far?",
-            textAlign = TextAlign.Center,
-            modifier = Modifier.width(220.dp),
-            style = defaultFontStyle(
-                DefaultFontStylesDataClass(
-                    fontSize = 18.sp
-                )
-            )
+            }, fontSize = 60.sp, textAlign = TextAlign.Center, lineHeight = 60.sp
         )
     }
 }
@@ -70,8 +64,7 @@ fun ModelSelectionRadioMenu(
                 }
             )
             .fillMaxWidth()
-            .padding(horizontal = 10.dp)
-        ,
+            .padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

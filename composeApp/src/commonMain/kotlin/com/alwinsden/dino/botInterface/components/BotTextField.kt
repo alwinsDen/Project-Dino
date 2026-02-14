@@ -55,13 +55,13 @@ import kotlinx.coroutines.launch
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun BotTextField(mode: String? = null) {
-    val defaultFieldText = "ask Dino, anything ✨"
+    val defaultFieldText = "ask Synapse, anything ✨"
     val defaultTextFieldValue = rememberTextFieldState("")
     val textFieldScrollState = rememberScrollState()
     val sheetState = rememberModalBottomSheetState()
     val routineScope = rememberCoroutineScope()
     val controlBottomSheetStatus = remember { mutableStateOf<Boolean>(false) }
-    val defaultModelSelection = remember { mutableStateOf<String>(ModelDefinitions.GEMINI.name) }
+    val defaultModelSelection = remember { mutableStateOf<String>(ModelDefinitions.CLAUDE.name) }
     if ((mode === null || mode == PageDefaults.botTextDefault)) {
         Row(
             modifier = Modifier
@@ -134,7 +134,10 @@ fun BotTextField(mode: String? = null) {
                 )
             ) {
                 Text(
-                    defaultModelSelection.value.lowercase(), style = defaultFontStyle(
+                    text = defaultModelSelection.value
+                        .lowercase()
+                        .replaceFirstChar { it.uppercase() },
+                    style = defaultFontStyle(
                         DefaultFontStylesDataClass()
                     )
                 )

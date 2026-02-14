@@ -1,8 +1,6 @@
 package com.alwinsden.dino.botInterface.components
 
 enum class ModelDefinitions {
-    GEMINI,
     CLAUDE,
-    DEEPSEEK,
-    LLAMA
+    LOCL_V1
 }
